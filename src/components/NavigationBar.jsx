@@ -21,7 +21,7 @@ const NavigationBar = () => {
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse>
-          <NavLink to={'/'} active>
+          <NavLink to={'/'}>
             Home
           </NavLink>
           <NavLink to={'/about'}>About</NavLink>
