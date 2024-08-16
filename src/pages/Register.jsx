@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../providers/AuthProvider";
 import Swal from "sweetalert2";
 
 const Register = () => {
-    const {registerUser,updateUserProfile}=useContext(AuthContext)
+    const {registerUser,updateUserProfile,googleSignIn}=useContext(AuthContext)
+    const navigate= useNavigate()
+    const location= useLocation()
     const handleRegister=(e)=>{
         e.preventDefault();
         const name= e.target.name.value
@@ -23,7 +25,8 @@ const Register = () => {
                     title: "Registration successful",
                     showConfirmButton: false,
                     timer: 1500
-                  });
+                });
+                navigate(location?.state?.pathname || '/')
                   
               }).catch((error) => {
                 console.log(error)
@@ -31,10 +34,35 @@ const Register = () => {
         })
         .catch(error=>{
             console.log(error)
+            Swal.fire({
+                icon: "error",
+                title: "Registration ERROR",
+                showConfirmButton: false,
+                timer: 1500
+            });
         })
     }
     const handleGoogleSignIn=()=>{
-
+        googleSignIn()
+        .then(result=>{
+            console.log(result.user)
+            Swal.fire({
+                icon: "success",
+                title: "Registration successful",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            navigate(location?.state?.pathname || '/')
+        })
+        .catch(error=>{
+            console.log(error)
+            Swal.fire({
+                icon: "error",
+                title: "Registration ERROR",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        })
     }
   return (
     <div className="max-w-7xl mx-auto mt-20">
@@ -65,7 +93,7 @@ const Register = () => {
                 <div className="mb-2 block">
                     <Label htmlFor="password1" value="Your password" />
                 </div>
-                <TextInput id="password1" name="password" type="password" required />
+                <TextInput id="password1" name="password" type="password" placeholder="atleast 6 characters" required />
                 </div>
                 
                 <Button type="submit">Register</Button>

@@ -1,17 +1,60 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Label, TextInput } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../providers/AuthProvider";
+import Swal from "sweetalert2";
 const Login = () => {
+    const {signInUser,googleSignIn}=useContext(AuthContext)
+    const navigate= useNavigate()
+    const location= useLocation()
     const handleSignIn=(e)=>{
         e.preventDefault();
-        const name= e.target.name.value
         const email= e.target.email.value
         const password= e.target.password.value
-        console.log({name, email, password})
+        signInUser(email,password)
+        .then((result)=>{
+            Swal.fire({
+                icon: "success",
+                title: "Login Successful",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            navigate(location?.state?.pathname || '/')
+
+              
+        })
+        .catch(error=>{
+            console.log(error)
+            Swal.fire({
+                icon: "error",
+                title: "Login ERROR",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        })
     }
     const handleGoogleSignIn=()=>{
-        
+        googleSignIn()
+        .then(result=>{
+            console.log(result.user)
+            Swal.fire({
+                icon: "success",
+                title: "Login successful",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            navigate(location?.state?.pathname || '/')
+        })
+        .catch(error=>{
+            console.log(error)
+            Swal.fire({
+                icon: "error",
+                title: "Login ERROR",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        })
     }
   return (
     <div className="max-w-7xl mx-auto mt-20">
