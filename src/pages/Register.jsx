@@ -1,18 +1,40 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Register = () => {
+    const {registerUser,updateUserProfile}=useContext(AuthContext)
     const handleRegister=(e)=>{
         e.preventDefault();
         const name= e.target.name.value
         const email= e.target.email.value
         const password= e.target.password.value
         console.log({name, email, password})
+        registerUser(email,password)
+        .then(result=>{
+            console.log(result.user)
+            updateUserProfile(name)
+            .then(() => {
+                Swal.fire({
+                    icon: "success",
+                    title: "Registration successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                  
+              }).catch((error) => {
+                console.log(error)
+              });
+        })
+        .catch(error=>{
+            console.log(error)
+        })
     }
     const handleGoogleSignIn=()=>{
-        
+
     }
   return (
     <div className="max-w-7xl mx-auto mt-20">
