@@ -84,7 +84,7 @@ const HomePage = () => {
     
     return (
         <div className='p-3 lg:p-2'>
-            <div className='flex-col md:flex justify-between '>
+            <div className='grid grid-cols-1 md:grid-cols-2 '>
                 {
                     (search===null)?
                     <div className='my-3 flex-col md:flex'>
@@ -106,10 +106,12 @@ const HomePage = () => {
                         <a href="/"><button className='p-1 bg-teal-200 border rounded-md'>Return Home</button></a>
                     </div>
                 }
-                <div className='flex items-center gap-2'>
-                    
-                    <input type="text" onBlur={handleSearch} className='rounded-md py-1' />
-                    <button className='bg-slate-100 p-1 rounded-md border my-3'>search</button>
+                <div className='flex justify-start md:justify-end'>
+                    <div className='flex items-center gap-2'>
+                        
+                        <input type="text" onBlur={handleSearch} className='rounded-md py-1' />
+                        <button className='bg-slate-100 p-1 rounded-md border my-3'>search</button>
+                    </div>
                 </div>
                 
             </div>
