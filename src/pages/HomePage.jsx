@@ -212,7 +212,7 @@ const HomePage = () => {
 
 
             
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                 {   
                     (isLoading===true)?<div className="min-w-full flex justify-center min-h-[80vh] items-center col-span-3">
                     <Spinner aria-label="Center-aligned spinner example" size={'xl'} />
