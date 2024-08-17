@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import { Card, Pagination, Spinner } from "flowbite-react";
+import { Button, Drawer, Sidebar, TextInput } from "flowbite-react";
+import {
+  HiChartPie,
+  HiClipboard,
+  HiCollection,
+  HiInformationCircle,
+  HiLogin,
+  HiPencil,
+  HiSearch,
+  HiShoppingBag,
+  HiUsers,
+} from "react-icons/hi";
 
 const HomePage = () => {
     const [category, setCategory]=useState(null)
@@ -12,13 +24,15 @@ const HomePage = () => {
     const [data, setData]=useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage]=useState(2)
+    const [isOpen, setIsOpen] = useState(true);
+
     const axiosPublic= useAxiosPublic()
     const handleCategoryChange=(e)=>{
         const cat= e.target.value;
         setCategory(cat)
         // console.log(category);
     }
-    
+    const handleClose = () => setIsOpen(false);
     const onPageChange = (page) => {
         setCurrentPage(page)
     }
@@ -40,54 +54,102 @@ const HomePage = () => {
     return (
         <div>
             <h2>this is homepage</h2>
-            <select onChange={handleCategoryChange} name="" id="">
-                {
-                    category?<option value="null">All Category</option>:<option value="null">Select Category</option>
-                }
-                <option value="Smartphone">SmartPhone</option>
-                <option value="Laptop">Laptop</option>
-                <option value="Smartwatch">SmartWatch</option>
-            </select>
-            {
-                category && 
-                
-                (category === 'Laptop')?
 
-                <select onChange={handleBrandName} name="" id="">
+            <div className='flex justify-center mb-4'>
+                <select onChange={handleCategoryChange} name="" id="">
                     {
-                        brandName?<option value="null">All Brand</option>:<option value="null">Select Brand</option>
+                        category?<option value="null">All Category</option>:<option value="null">Select Category</option>
                     }
-                    <option value="HP">HP</option>
-                    <option value="Lenovo">Lenovo</option>
-                    <option value="Asus">Asus</option>
-                    <option value="Acer">Acer</option>
-                    <option value="Apple">MacBook</option>
+                    <option value="Smartphone">SmartPhone</option>
+                    <option value="Laptop">Laptop</option>
+                    <option value="Smartwatch">SmartWatch</option>
                 </select>
-                :(category==='Smartphone')?
-                 <select onChange={handleBrandName} name="" id="">
-                    {
-                        brandName?<option value="null">All Brand</option>:<option value="null">Select Brand</option>
-                    }
-                    <option value="Apple">Apple</option>
-                    <option value="Samsung">Samsung</option>
-                    <option value="Xiaomi">Xiaomi</option>
-                    <option value="Oppo">Oppo</option>
-                    <option value="Vivo">vivo</option>
-                 </select>
-                :(category==='Smartwatch')?
-                 <select onChange={handleBrandName} name="" id="">
-                    {
-                        brandName?<option value="null">All Brand</option>:<option value="null">Select Brand</option>
-                    }
-                    <option value="Samsung">Samsung</option>
-                    <option value="Apple">Apple</option>
-                    <option value="Amazfit">Amazfit</option>
-                    <option value="Mibro">Mibro</option>
-                 </select>
-                :<></> 
+            </div>
 
+            {/* Drawer section */}
+            {
+                category && <>
+                <div className="flex items-center justify-start ml-3">
+                    <Button onClick={() => setIsOpen(true)}>Filter</Button>
+                </div>
+                <Drawer open={isOpen} onClose={handleClose}>
+                    <Drawer.Header title="Filter" titleIcon={() => <></>} />
+                    <Drawer.Items>
+                    <Sidebar
+                        aria-label="Sidebar with multi-level dropdown example"
+                        className="[&>div]:bg-transparent [&>div]:p-0"
+                    >
+                        <div className="flex h-full flex-col justify-between py-2">
+                        <div>
+                            <form className="pb-3 md:hidden">
+                            <TextInput icon={HiSearch} type="search" placeholder="Search" required size={32} />
+                            </form>
+                            <Sidebar.Items>
+                            <Sidebar.ItemGroup>
+                            <p className='font-bold'>Select Category</p>    
+                            {
+                                category && 
+                                
+                                (category === 'Laptop')?
+
+                                <select onChange={handleBrandName} name="" id="">
+                                    {
+                                        brandName?<option value="null">All Brand</option>:<option value="null">Select Brand</option>
+                                    }
+                                    <option value="HP">HP</option>
+                                    <option value="Lenovo">Lenovo</option>
+                                    <option value="Asus">Asus</option>
+                                    <option value="Acer">Acer</option>
+                                    <option value="Apple">MacBook</option>
+                                </select>
+                                :(category==='Smartphone')?
+                                <select onChange={handleBrandName} name="" id="">
+                                    {
+                                        brandName?<option value="null">All Brand</option>:<option value="null">Select Brand</option>
+                                    }
+                                    <option value="Apple">Apple</option>
+                                    <option value="Samsung">Samsung</option>
+                                    <option value="Xiaomi">Xiaomi</option>
+                                    <option value="Oppo">Oppo</option>
+                                    <option value="Vivo">vivo</option>
+                                </select>
+                                :(category==='Smartwatch')?
+                                <select onChange={handleBrandName} name="" id="">
+                                    {
+                                        brandName?<option value="null">All Brand</option>:<option value="null">Select Brand</option>
+                                    }
+                                    <option value="Samsung">Samsung</option>
+                                    <option value="Apple">Apple</option>
+                                    <option value="Amazfit">Amazfit</option>
+                                    <option value="Mibro">Mibro</option>
+                                </select>
+                                :<></> 
+
+                            }
+                            </Sidebar.ItemGroup>
+                            <Sidebar.ItemGroup>
+                                <Sidebar.Item href="https://github.com/themesberg/flowbite-react/" icon={HiClipboard}>
+                                Docs
+                                </Sidebar.Item>
+                                <Sidebar.Item href="https://flowbite-react.com/" icon={HiCollection}>
+                                Components
+                                </Sidebar.Item>
+                                <Sidebar.Item href="https://github.com/themesberg/flowbite-react/issues" icon={HiInformationCircle}>
+                                Help
+                                </Sidebar.Item>
+                            </Sidebar.ItemGroup>
+                            </Sidebar.Items>
+                        </div>
+                        </div>
+                    </Sidebar>
+                    </Drawer.Items>
+                </Drawer>
+            </>
             }
-            <div className='grid grid-cols-3 gap-5'>
+
+
+            
+            <div className='grid grid-cols-4 gap-5'>
                 {   
                     (data.length<1)?<div className="min-w-full flex justify-center min-h-[80vh] items-center col-span-3">
                     <Spinner aria-label="Center-aligned spinner example" size={'xl'} />
