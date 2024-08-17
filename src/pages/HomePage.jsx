@@ -13,14 +13,14 @@ import {
   HiShoppingBag,
   HiUsers,
 } from "react-icons/hi";
+import { IoFilterSharp } from 'react-icons/io5';
 
 const HomePage = () => {
     const [category, setCategory]=useState(null)
     const [brandName, setBrandName]=useState(null)
     const [priceLowerLimit, setPriceLowerLimit]=useState(0)
     const [priceUpperLimit, setPriceUpperLimit]=useState(500000)
-    const [priceSorting, setPriceSorting]=useState('ascending')
-    const [dateSorting, setDateSorting]=useState('latest')
+    const [sorting, setSorting]=useState(null)
     const [data, setData]=useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage]=useState(2)
@@ -30,47 +30,77 @@ const HomePage = () => {
     const handleCategoryChange=(e)=>{
         const cat= e.target.value;
         setCategory(cat)
+        setCurrentPage(1)
         // console.log(category);
     }
     const handleClose = () => setIsOpen(false);
+
     const onPageChange = (page) => {
         setCurrentPage(page)
     }
+
+    const updateLowerLimit=(e)=>{
+        setPriceLowerLimit(e.target.value)
+    }
+
+    const updateUpperLimit=(e)=>{
+        setPriceUpperLimit(e.target.value)
+    }
+    const handleBrandName=(e)=>{
+        setBrandName(e.target.value)
+        setCurrentPage(1)
+    }
+    const handleSort=(e)=>{
+        setSorting(e.target.value)
+    }
     useEffect(()=>{
-        console.log(currentPage)
-    },[currentPage])
+        console.log(priceLowerLimit)
+        console.log(priceUpperLimit)
+    },[priceLowerLimit,priceUpperLimit])
     useEffect(() => {
-        axiosPublic.get(`/products?category=${category}&brandName=${brandName}&page=${currentPage}`)
+        axiosPublic.get(`/products?category=${category}&brandName=${brandName}&page=${currentPage}&priceLowerLimit=${priceLowerLimit}&priceUpperLimit=${priceUpperLimit}&sort=${sorting}`)
         .then(res=>{
             console.log(res.data.products)
             setData(res.data.products)
             setTotalPage(res.data.totalPages)
         })
-    }, [category,brandName,currentPage]);
+    }, [category,brandName,currentPage,priceLowerLimit,priceUpperLimit,sorting]);
 
-    const handleBrandName=(e)=>{
-        setBrandName(e.target.value)
-    }
+    
     return (
         <div>
-            <h2>this is homepage</h2>
-
             <div className='flex justify-center mb-4'>
-                <select onChange={handleCategoryChange} name="" id="">
-                    {
-                        category?<option value="null">All Category</option>:<option value="null">Select Category</option>
-                    }
-                    <option value="Smartphone">SmartPhone</option>
-                    <option value="Laptop">Laptop</option>
-                    <option value="Smartwatch">SmartWatch</option>
-                </select>
+                <div>
+                    <span className='text-lg font-medium'>Select Category: </span>
+                    <select className='border-2 rounded-md' onChange={handleCategoryChange} name="" id="">
+                        {
+                            category?<option value="null">All Category</option>:<option value="null">Select Category</option>
+                        }
+                        <option value="Smartphone">SmartPhone</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Smartwatch">SmartWatch</option>
+                    </select>
+                </div>
             </div>
 
             {/* Drawer section */}
             {
                 category && <>
-                <div className="flex items-center justify-start ml-3">
-                    <Button onClick={() => setIsOpen(true)}>Filter</Button>
+                <div className='flex justify-between'>
+                    <div className="flex items-center justify-start ml-3">
+                        <Button className='bg-slate-100 rounded-none my-2 text-black' onClick={() => setIsOpen(true)}> <div className='flex justify-center items-center gap-2'> <IoFilterSharp /> <span>Filter</span></div></Button>
+                    </div>
+                    <div className="flex items-center justify-end mr-3">
+                        <div>
+                            <span>Sort By :</span>
+                            <select onChange={handleSort} className='max-w-28' name="" id="">
+                                <option value="null">Default</option>
+                                <option value="priceAscending">Price &#40;Low &#62; High&#41;</option>
+                                <option value="priceDescending">Price &#40;High &#62; Low&#41;</option>
+                                <option value="latest">Latest first</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <Drawer open={isOpen} onClose={handleClose}>
                     <Drawer.Header title="Filter" titleIcon={() => <></>} />
@@ -86,13 +116,11 @@ const HomePage = () => {
                             </form>
                             <Sidebar.Items>
                             <Sidebar.ItemGroup>
-                            <p className='font-bold'>Select Category</p>    
+                            <p className='font-bold'>Select Brand</p>    
                             {
-                                category && 
-                                
                                 (category === 'Laptop')?
 
-                                <select onChange={handleBrandName} name="" id="">
+                                <select onChange={handleBrandName} className='border-2 rounded-md' name="" id="">
                                     {
                                         brandName?<option value="null">All Brand</option>:<option value="null">Select Brand</option>
                                     }
@@ -103,7 +131,7 @@ const HomePage = () => {
                                     <option value="Apple">MacBook</option>
                                 </select>
                                 :(category==='Smartphone')?
-                                <select onChange={handleBrandName} name="" id="">
+                                <select onChange={handleBrandName} className='border-2 rounded-md' name="" id="">
                                     {
                                         brandName?<option value="null">All Brand</option>:<option value="null">Select Brand</option>
                                     }
@@ -114,7 +142,7 @@ const HomePage = () => {
                                     <option value="Vivo">vivo</option>
                                 </select>
                                 :(category==='Smartwatch')?
-                                <select onChange={handleBrandName} name="" id="">
+                                <select onChange={handleBrandName} className='border-2 rounded-md' name="" id="">
                                     {
                                         brandName?<option value="null">All Brand</option>:<option value="null">Select Brand</option>
                                     }
@@ -128,15 +156,14 @@ const HomePage = () => {
                             }
                             </Sidebar.ItemGroup>
                             <Sidebar.ItemGroup>
-                                <Sidebar.Item href="https://github.com/themesberg/flowbite-react/" icon={HiClipboard}>
-                                Docs
-                                </Sidebar.Item>
-                                <Sidebar.Item href="https://flowbite-react.com/" icon={HiCollection}>
-                                Components
-                                </Sidebar.Item>
-                                <Sidebar.Item href="https://github.com/themesberg/flowbite-react/issues" icon={HiInformationCircle}>
-                                Help
-                                </Sidebar.Item>
+                                <p>Price Range</p>
+                                <div className='flex gap-4'>
+                                    <input  onBlur={updateLowerLimit} type="number" className='w-1/2 border-2 rounded-md' placeholder='Minimun' />
+                                    <input onBlur={updateUpperLimit} type="number" className='w-1/2 border-2 rounded-md' placeholder='Maximum' />
+                                </div>
+                            </Sidebar.ItemGroup>
+                            <Sidebar.ItemGroup>
+                                
                             </Sidebar.ItemGroup>
                             </Sidebar.Items>
                         </div>
