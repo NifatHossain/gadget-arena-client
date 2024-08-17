@@ -16,9 +16,9 @@ const ProductDetails = () => {
     },[])
     return (
         <div>
-            <div className='grid grid-cols-1 md:grid-cols-2'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
                 <div>
-                    <img className='max-w-72 md:max-w-lg' src={details.productImageUrl} alt="" />
+                    <img className='max-w-72  md:max-w-80 lg:max-w-lg' src={details.productImageUrl} alt="" />
                 </div>
                 {
                     (details.category==='Smartphone')?
