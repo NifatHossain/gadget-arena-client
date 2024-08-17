@@ -32,6 +32,7 @@ const HomePage = () => {
         const cat= e.target.value;
         setCategory(cat)
         setCurrentPage(1)
+        setSearch(null)
         // console.log(category);
     }
     const handleClose = () => setIsOpen(false);
@@ -56,48 +57,62 @@ const HomePage = () => {
     }
     const handleSearch=(e)=>{
         setSearch(e.target.value)
+        setCurrentPage(1);
+        setCategory(null)
+        setBrandName(null)
+        setPriceLowerLimit(0);
+        setPriceUpperLimit(500000);
+        setSorting(null)
     }
-    useEffect(()=>{
-        console.log(priceLowerLimit)
-        console.log(priceUpperLimit)
-    },[priceLowerLimit,priceUpperLimit])
+    // useEffect(()=>{
+    //     axiosPublic.get(`/searchProducts?searchKey=${search}`)
+    // },[search])
     useEffect(() => {
-        axiosPublic.get(`/products?category=${category}&brandName=${brandName}&page=${currentPage}&priceLowerLimit=${priceLowerLimit}&priceUpperLimit=${priceUpperLimit}&sort=${sorting}`)
+        axiosPublic.get(`/products?category=${category}&brandName=${brandName}&page=${currentPage}&priceLowerLimit=${priceLowerLimit}&priceUpperLimit=${priceUpperLimit}&sort=${sorting}&searchKey=${search}`)
         .then(res=>{
             console.log(res.data.products)
             setData(res.data.products)
             setTotalPage(res.data.totalPages)
         })
-    }, [category,brandName,currentPage,priceLowerLimit,priceUpperLimit,sorting]);
+    }, [category,brandName,currentPage,priceLowerLimit,priceUpperLimit,sorting,search]);
 
     
     return (
         <div>
-            <div className='flex justify-between'>
-                <div>
-                    <span className='text-lg font-medium'>Select Category: </span>
-                    <select className='border-2 rounded-md py-1' onChange={handleCategoryChange} name="" id="">
-                        {
-                            category?<option value="null">All Category</option>:<option value="null">Select Category</option>
-                        }
-                        <option value="Smartphone">SmartPhone</option>
-                        <option value="Laptop">Laptop</option>
-                        <option value="Smartwatch">SmartWatch</option>
-                    </select>
-                </div>
+            <div className='flex justify-between my-3'>
+                {
+                    (search===null)?
+                    <div>
+                        <span className='text-lg font-medium'>Select Category: </span>
+                        <select className='border-2 rounded-md py-1' onChange={handleCategoryChange} name="" id="">
+                            {
+                                category?<option value="null">All Category</option>:<option value="null">Select Category</option>
+                            }
+                            <option value="Smartphone">SmartPhone</option>
+                            <option value="Laptop">Laptop</option>
+                            <option value="Smartwatch">SmartWatch</option>
+                        </select>
+                    </div>:
+                    <div>
+                        <a href="/"><button className='p-1 bg-teal-200 border rounded-md'>Return Home</button></a>
+                    </div>
+                }
                 <div className='flex items-center gap-2'>
-                    <span>Search: </span>
+                    
                     <input type="text" onBlur={handleSearch} className='rounded-md py-1' />
+                    <button className='bg-slate-100 p-1 rounded-md border'>search</button>
                 </div>
             </div>
 
             {/* Drawer section */}
-            {
-                category && <>
+            {/* { */}
+                 <>
                 <div className='flex justify-between'>
-                    <div className="flex items-center justify-start ml-3">
+                    {
+                        category && <div className="flex items-center justify-start ml-3">
                         <Button className='bg-slate-100 rounded-none my-2 text-black' onClick={() => setIsOpen(true)}> <div className='flex justify-center items-center gap-2'> <IoFilterSharp /> <span>Filter</span></div></Button>
                     </div>
+                    }
                     <div className="flex items-center justify-end mr-3">
                         <div>
                             <span>Sort By : </span>
@@ -109,6 +124,9 @@ const HomePage = () => {
                             </select>
                         </div>
                     </div>
+                    
+                    
+                 
                 </div>
                 <Drawer open={isOpen} onClose={handleClose}>
                     <Drawer.Header title="Filter" titleIcon={() => <></>} />
@@ -180,11 +198,11 @@ const HomePage = () => {
                     </Drawer.Items>
                 </Drawer>
             </>
-            }
+            {/* } */}
 
 
             
-            <div className='grid grid-cols-4 gap-5'>
+            <div className='grid grid-cols-3 gap-5'>
                 {   
                     (data.length<1)?<div className="min-w-full flex justify-center min-h-[80vh] items-center col-span-3">
                     <Spinner aria-label="Center-aligned spinner example" size={'xl'} />
@@ -192,7 +210,7 @@ const HomePage = () => {
                     data.map(product=><div key={product._id}>
                         <Card
                             className="max-w-sm"
-                            imgAlt="Apple Watch Series 7 in colors pink, silver, and black"
+                            imgAlt={product.modelName}
                             imgSrc={product.productImageUrl}
                         >
                         <a href="#">
@@ -201,6 +219,7 @@ const HomePage = () => {
                             </h5>
                         </a>
                         <p>{product.productCreationDateTime}</p>
+                        <p>{product.description}</p>
                         <div className="mb-1 mt-1 flex items-center">
                             <svg
                             className="h-5 w-5 text-yellow-300"
@@ -259,7 +278,7 @@ const HomePage = () => {
                     </div>)
                 }
             </div>
-            <div className="flex overflow-x-auto sm:justify-center">
+            <div className="flex overflow-x-auto sm:justify-center mt-3 mb-5">
                 <Pagination currentPage={currentPage} totalPages={totalPage} onPageChange={onPageChange} showIcons />
             </div>
         </div>
