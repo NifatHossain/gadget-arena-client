@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Navbar } from "flowbite-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const NavigationBar = () => {
   return (
@@ -17,7 +17,7 @@ const NavigationBar = () => {
           </span>
         </Navbar.Brand>
         <div className="flex md:order-2">
-          <Button>Log In</Button>
+          <Link to={'/login'}><Button>Log In</Button></Link>
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse>
