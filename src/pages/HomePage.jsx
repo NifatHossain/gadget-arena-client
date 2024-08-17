@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import { Card, Pagination, Spinner } from "flowbite-react";
 import { Button, Drawer, Sidebar, TextInput } from "flowbite-react";
+import noDataAnimation from '../../public/noDataFound.json'
 import {
   HiChartPie,
   HiClipboard,
@@ -14,6 +15,7 @@ import {
   HiUsers,
 } from "react-icons/hi";
 import { IoFilterSharp } from 'react-icons/io5';
+import Lottie from 'lottie-react';
 
 const HomePage = () => {
     const [category, setCategory]=useState(null)
@@ -26,6 +28,7 @@ const HomePage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage]=useState(2)
     const [isOpen, setIsOpen] = useState(true);
+    const [isLoading, setIsLoading] = useState(true)
 
     const axiosPublic= useAxiosPublic()
     const handleCategoryChange=(e)=>{
@@ -73,6 +76,7 @@ const HomePage = () => {
             console.log(res.data.products)
             setData(res.data.products)
             setTotalPage(res.data.totalPages)
+            setIsLoading(false);
         })
     }, [category,brandName,currentPage,priceLowerLimit,priceUpperLimit,sorting,search]);
 
@@ -204,9 +208,11 @@ const HomePage = () => {
             
             <div className='grid grid-cols-3 gap-5'>
                 {   
-                    (data.length<1)?<div className="min-w-full flex justify-center min-h-[80vh] items-center col-span-3">
+                    (isLoading===true)?<div className="min-w-full flex justify-center min-h-[80vh] items-center col-span-3">
                     <Spinner aria-label="Center-aligned spinner example" size={'xl'} />
-                  </div>:
+                  </div>:(isLoading===false && data.length<1)? <div className="min-w-full flex justify-center min-h-[50vh] items-center col-span-3">
+                  <Lottie className=" w-1/2 md:w-1/4 " animationData={noDataAnimation} />
+                  </div> :
                     data.map(product=><div key={product._id}>
                         <Card
                             className="max-w-sm"
