@@ -28,7 +28,7 @@ const HomePage = () => {
     const [data, setData]=useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage]=useState(2)
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true)
 
     const axiosPublic= useAxiosPublic()
