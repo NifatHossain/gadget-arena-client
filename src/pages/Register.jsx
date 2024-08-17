@@ -52,7 +52,8 @@ const Register = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
-            navigate(location?.state?.pathname || '/')
+            // navigate(location?.state?.pathname || '/')
+            navigate('/')
         })
         .catch(error=>{
             console.log(error)

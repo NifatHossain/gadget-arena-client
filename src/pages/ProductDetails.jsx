@@ -16,13 +16,13 @@ const ProductDetails = () => {
     },[])
     return (
         <div>
-            <div className='flex items-center'>
+            <div className='grid grid-cols-1 md:grid-cols-2'>
                 <div>
-                    <img className='max-w-lg' src={details.productImageUrl} alt="" />
+                    <img className='max-w-72 md:max-w-lg' src={details.productImageUrl} alt="" />
                 </div>
                 {
                     (details.category==='Smartphone')?
-                    <div>
+                    <div className='p-3 md:p-1'>
                         <p className='font-semibold'>Product Brand: <span className='font-normal'>{details.brandName}</span></p>
                         <p className='font-semibold'>Product Model: <span className='font-normal'>{details.modelName}</span></p>
                         <p className='font-semibold'>Price: <span className='font-normal'>{details.price} Bdt</span></p>
@@ -42,7 +42,7 @@ const ProductDetails = () => {
                             <Link to={'/'}><button className='p-2 bg-teal-200 rounded-md'>Return Home</button></Link>
                         </div>
                     </div>:(details.category==='Laptop')?
-                    <div>
+                    <div className='p-3 md:p-1'>
                         <p className='font-semibold'>Product Brand: <span className='font-normal'>{details.brandName}</span></p>
                         <p className='font-semibold'>Product Model: <span className='font-normal'>{details.modelName}</span></p>
                         <p className='font-semibold'>Price: <span className='font-normal'>{details.price} Bdt</span></p>
@@ -62,7 +62,7 @@ const ProductDetails = () => {
                             <Link to={'/'}><button className='p-2 bg-teal-200 rounded-md'>Return Home</button></Link>
                         </div>
                     </div>:
-                    <div>
+                    <div className='p-3 md:p-1'>
                         <p className='font-semibold'>Product Brand: <span className='font-normal'>{details.brandName}</span></p>
                         <p className='font-semibold'>Product Model: <span className='font-normal'>{details.modelName}</span></p>
                         <p className='font-semibold'>Price: <span className='font-normal'>{details.price} Bdt</span></p>

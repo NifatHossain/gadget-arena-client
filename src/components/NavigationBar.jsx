@@ -7,6 +7,14 @@ const NavigationBar = () => {
     const {user,logOutUser}=useContext(AuthContext)
     const handleLogout=()=>{
         logOutUser()
+        .then(()=>{
+            Swal.fire({
+                icon: "success",
+                title: "LogOut successful",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        })
     }
   return (
     <div>

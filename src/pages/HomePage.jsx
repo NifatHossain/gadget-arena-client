@@ -147,9 +147,9 @@ const HomePage = () => {
                     >
                         <div className="flex h-full flex-col justify-between py-2">
                         <div>
-                            <form className="pb-3 md:hidden">
+                            {/* <form className="pb-3 md:hidden">
                             <TextInput icon={HiSearch} type="search" placeholder="Search" required size={32} />
-                            </form>
+                            </form> */}
                             <Sidebar.Items>
                             <Sidebar.ItemGroup>
                             <p className='font-bold'>Select Brand</p>    
