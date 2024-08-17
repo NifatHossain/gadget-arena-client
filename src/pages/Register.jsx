@@ -65,11 +65,11 @@ const Register = () => {
         })
     }
   return (
-    <div className="max-w-7xl mx-auto mt-20">
+    <div className="max-w-7xl mx-auto mt-6 md:mt-20 p-3 md:p-2">
         <div>
             <h2 className="text-2xl text-center font-medium"> Registration Page</h2>
         </div>
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto ">
             <form onSubmit={handleRegister} className="flex flex-col gap-4">
                 <div>
                 <div className="mb-2 block">

@@ -57,7 +57,7 @@ const Login = () => {
         })
     }
   return (
-    <div className="max-w-7xl mx-auto mt-20">
+    <div className="max-w-7xl mx-auto mt-6 md:mt-20 p-3 md:p-2">
       <div>
         <h2 className="text-2xl text-center font-medium">Sign In Page</h2>
       </div>

@@ -16,6 +16,7 @@ import {
 } from "react-icons/hi";
 import { IoFilterSharp } from 'react-icons/io5';
 import Lottie from 'lottie-react';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
     const [category, setCategory]=useState(null)
@@ -82,20 +83,24 @@ const HomePage = () => {
 
     
     return (
-        <div>
-            <div className='flex justify-between my-3'>
+        <div className='p-3 lg:p-2'>
+            <div className='flex-col md:flex justify-between '>
                 {
                     (search===null)?
-                    <div>
-                        <span className='text-lg font-medium'>Select Category: </span>
-                        <select className='border-2 rounded-md py-1' onChange={handleCategoryChange} name="" id="">
-                            {
-                                category?<option value="null">All Category</option>:<option value="null">Select Category</option>
-                            }
-                            <option value="Smartphone">SmartPhone</option>
-                            <option value="Laptop">Laptop</option>
-                            <option value="Smartwatch">SmartWatch</option>
-                        </select>
+                    <div className='my-3 flex-col md:flex'>
+                        <div>
+                            <p className='text-lg font-medium'>Select Category: </p>
+                        </div>
+                        <div>
+                            <select className='border-2 rounded-md py-1' onChange={handleCategoryChange} name="" id="">
+                                {
+                                    category?<option value="null">All Category</option>:<option value="null">Select Category</option>
+                                }
+                                <option value="Smartphone">SmartPhone</option>
+                                <option value="Laptop">Laptop</option>
+                                <option value="Smartwatch">SmartWatch</option>
+                            </select>
+                        </div>
                     </div>:
                     <div>
                         <a href="/"><button className='p-1 bg-teal-200 border rounded-md'>Return Home</button></a>
@@ -104,14 +109,15 @@ const HomePage = () => {
                 <div className='flex items-center gap-2'>
                     
                     <input type="text" onBlur={handleSearch} className='rounded-md py-1' />
-                    <button className='bg-slate-100 p-1 rounded-md border'>search</button>
+                    <button className='bg-slate-100 p-1 rounded-md border my-3'>search</button>
                 </div>
+                
             </div>
 
             {/* Drawer section */}
             {/* { */}
                  <>
-                <div className='flex justify-between'>
+                <div className='flex justify-between mb-3'>
                     {
                         category && <div className="flex items-center justify-start ml-3">
                         <Button className='bg-slate-100 rounded-none my-2 text-black' onClick={() => setIsOpen(true)}> <div className='flex justify-center items-center gap-2'> <IoFilterSharp /> <span>Filter</span></div></Button>
@@ -206,7 +212,7 @@ const HomePage = () => {
 
 
             
-            <div className='grid grid-cols-3 gap-5'>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
                 {   
                     (isLoading===true)?<div className="min-w-full flex justify-center min-h-[80vh] items-center col-span-3">
                     <Spinner aria-label="Center-aligned spinner example" size={'xl'} />
@@ -273,12 +279,12 @@ const HomePage = () => {
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="text-2xl font-bold text-gray-900 dark:text-white"><span className='text-sm font-extrabold'>&#2547; </span>{product.price}</span>
-                            <a
-                            href="#"
+                            <Link
+                            to={`/productDetails/${product._id}`}
                             className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                             >
-                            Add to cart
-                            </a>
+                            Show Details
+                            </Link>
                         </div>
                         </Card>
                     </div>)

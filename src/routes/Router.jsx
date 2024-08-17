@@ -4,6 +4,7 @@ import ErrorPage from "../pages/ErrorPage";
 import Layout from "../pages/Layout";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import ProductDetails from "../pages/ProductDetails";
 
 export const router = createBrowserRouter([
     {
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
         {
             path:'/',
             element:<HomePage></HomePage>
+        },
+        {
+            path:'/productDetails/:id',
+            element:<ProductDetails></ProductDetails>
         }
       ]
     },

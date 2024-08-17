@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Navbar } from "flowbite-react";
 import { NavLink, Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 const NavigationBar = () => {
+    const {user,logOutUser}=useContext(AuthContext)
+    const handleLogout=()=>{
+        logOutUser()
+    }
   return (
     <div>
       <Navbar fluid rounded>
@@ -17,17 +22,19 @@ const NavigationBar = () => {
           </span>
         </Navbar.Brand>
         <div className="flex md:order-2">
-          <Link to={'/login'}><Button>Log In</Button></Link>
+          {
+            user?<Button onClick={handleLogout}>Log out</Button>:<Link to={'/login'}><Button>Log In</Button></Link>
+          }
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse>
           <NavLink to={'/'}>
             Home
           </NavLink>
-          <NavLink to={'/about'}>About</NavLink>
-          <NavLink to={'/'}>Services</NavLink>
+          <NavLink to={'/register'}>Register</NavLink>
+          {/* <NavLink to={'/'}>Services</NavLink>
           <NavLink to={'/'}>Pricing</NavLink>
-          <NavLink to={'/contact'}>Contact</NavLink>
+          <NavLink to={'/contact'}>Contact</NavLink> */}
         </Navbar.Collapse>
       </Navbar>
     </div>
