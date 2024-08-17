@@ -1,8 +1,24 @@
-# React + Vite
+# Gadget-Arena
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+gadget-arena is demo e-commerce site. This project focuses on implementing pagination, searching, categorization and sorting of products.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Site
+
+[Gadget-Arena](https://gadget-arena-web.netlify.app/)
+
+
+## Run app locally 
+
+--> clone the project from github. create a .env file . inside the file you need to save firebase credentials. 
+
+--> in terminal run command: npm i 
+
+
+--> run command: npm run dev
+
+Your frontend is ready . Now you need to setup the backend server.
+
+
+[BackendCode](https://github.com/NifatHossain/gadget-arena-server)
+
