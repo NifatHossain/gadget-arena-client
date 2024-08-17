@@ -21,6 +21,7 @@ const HomePage = () => {
     const [priceLowerLimit, setPriceLowerLimit]=useState(0)
     const [priceUpperLimit, setPriceUpperLimit]=useState(500000)
     const [sorting, setSorting]=useState(null)
+    const [search, setSearch]=useState(null)
     const [data, setData]=useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage]=useState(2)
@@ -53,6 +54,9 @@ const HomePage = () => {
     const handleSort=(e)=>{
         setSorting(e.target.value)
     }
+    const handleSearch=(e)=>{
+        setSearch(e.target.value)
+    }
     useEffect(()=>{
         console.log(priceLowerLimit)
         console.log(priceUpperLimit)
@@ -69,10 +73,10 @@ const HomePage = () => {
     
     return (
         <div>
-            <div className='flex justify-center mb-4'>
+            <div className='flex justify-between'>
                 <div>
                     <span className='text-lg font-medium'>Select Category: </span>
-                    <select className='border-2 rounded-md' onChange={handleCategoryChange} name="" id="">
+                    <select className='border-2 rounded-md py-1' onChange={handleCategoryChange} name="" id="">
                         {
                             category?<option value="null">All Category</option>:<option value="null">Select Category</option>
                         }
@@ -80,6 +84,10 @@ const HomePage = () => {
                         <option value="Laptop">Laptop</option>
                         <option value="Smartwatch">SmartWatch</option>
                     </select>
+                </div>
+                <div className='flex items-center gap-2'>
+                    <span>Search: </span>
+                    <input type="text" onBlur={handleSearch} className='rounded-md py-1' />
                 </div>
             </div>
 
@@ -92,8 +100,8 @@ const HomePage = () => {
                     </div>
                     <div className="flex items-center justify-end mr-3">
                         <div>
-                            <span>Sort By :</span>
-                            <select onChange={handleSort} className='max-w-28' name="" id="">
+                            <span>Sort By : </span>
+                            <select onChange={handleSort} className='max-w-28 rounded-md' name="" id="">
                                 <option value="null">Default</option>
                                 <option value="priceAscending">Price &#40;Low &#62; High&#41;</option>
                                 <option value="priceDescending">Price &#40;High &#62; Low&#41;</option>
@@ -192,6 +200,7 @@ const HomePage = () => {
                             {product.modelName}
                             </h5>
                         </a>
+                        <p>{product.productCreationDateTime}</p>
                         <div className="mb-1 mt-1 flex items-center">
                             <svg
                             className="h-5 w-5 text-yellow-300"
