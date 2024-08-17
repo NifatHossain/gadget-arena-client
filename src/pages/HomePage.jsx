@@ -280,7 +280,7 @@ const HomePage = () => {
                         <div className="flex items-center justify-between">
                             <span className="text-2xl font-bold text-gray-900 dark:text-white"><span className='text-sm font-extrabold'>&#2547; </span>{product.price}</span>
                             <Link
-                            to={`/productDetails/${product._id}`}
+                            to={`/productDetails?id=${product._id}`}
                             className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                             >
                             Show Details

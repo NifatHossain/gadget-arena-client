@@ -5,6 +5,7 @@ import Layout from "../pages/Layout";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import ProductDetails from "../pages/ProductDetails";
+import PrivateRoute from "../providers/PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -17,8 +18,8 @@ export const router = createBrowserRouter([
             element:<HomePage></HomePage>
         },
         {
-            path:'/productDetails/:id',
-            element:<ProductDetails></ProductDetails>
+            path:'/productDetails',
+            element:<PrivateRoute><ProductDetails></ProductDetails></PrivateRoute>
         }
       ]
     },
