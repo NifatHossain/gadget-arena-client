@@ -25,7 +25,7 @@ const FooterPart = () => {
             <div>
               <Footer.Title title="about" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Showroom</Footer.Link>
+                <Footer.Link href="#">Outlets</Footer.Link>
                 <Footer.Link href="#">Events</Footer.Link>
               </Footer.LinkGroup>
             </div>
